@@ -7,8 +7,8 @@ with open("README.md", "r") as f:
     readme = f.read()+"\n\n"
 
 setup(
-    name="simplespec",
-    version="0.0.1",
+    name="spectra",
+    version="0.1.0",
     include_package_data=True,
     python_requires='>=3.10',
     packages=find_packages(),
@@ -24,4 +24,3 @@ setup(
         "Operating System :: OS Independent",
     ],
 )
-

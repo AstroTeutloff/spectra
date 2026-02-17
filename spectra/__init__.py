@@ -1,4 +1,5 @@
-__all__ = ["BaseSpectrum", "SDSSSpectrum"]
+from spectra.SDSSSpectrum import SDSSSpectrum
+from spectra.IRAFSpectrum import IRAFSpectrum
 
-from .BaseSpectrum import BaseSpectrum
-from .SDSSSpectrum import SDSSSpectrum
+from spectra.Spectrum import Spectrum
+from spectra.TransitionLine import TransitionLine
