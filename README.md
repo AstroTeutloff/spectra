@@ -50,4 +50,4 @@ plt.show()
 If you have ideas and/or improvements, feel free to open a PR! :)
 
 ---
-[brainmade](brainmade.org)
+[brainmade](https://brainmade.org)
