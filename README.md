@@ -5,13 +5,13 @@ Spectra in python.
 ## INSTALLATION
 You can install the package via `pip`:
 ```
-pip install git+https://github.com/AstroTeutloff/simplespec.git
+pip install git+https://github.com/AstroTeutloff/spectra.git
 ```
 or by cloning the repository:
 ```bash
-git clone https://github.com/AstroTeutloff/simplespec.git
-cd simplespec
-pip install .
+git clone https://github.com/AstroTeutloff/spectra.git
+cd spectra
+pip install -e .
 ```
 
 ## USE
@@ -41,6 +41,7 @@ plt.show()
 
 ## NOTABLE CHANGES
 - As of v0.1.0:
+  - Module no longer named `simplespec`, new name `spectra`
   - `SDSSSpectrum` no longer supports fitting the continuum. If need arises, it will be implemented in the `Spectrum` dataclass itself.
   - `SDSSSpectrum` no longer supports masking the Spectrum edges. This _might_ be refactored into the `Spectrum` dataclass.
   - `SDSSSpectrum` no longer has QTables as its `spectra` and `coadd` fields, these are now `Spectrum` objects.
