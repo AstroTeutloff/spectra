@@ -112,7 +112,7 @@ class IRAFSpectrum():
         pixels_offset = header["CRPIX1"]
 
         wave_space = wave_offset + wave_resolution * \
-            (np.arange(1, pixels_specaxis, 1) - pixels_offset)
+            (np.arange(0, pixels_specaxis, 1) - pixels_offset)
 
         flux_space = IRAFSpectrum.__get_flux(data, pixels_specaxis)
         # Masking and setting up units. With new astropy versions not necessary

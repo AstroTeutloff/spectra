@@ -9,6 +9,7 @@ Dataclass for storing spectra.
 from __future__ import annotations
 from dataclasses import dataclass
 from astropy import units as u, constants as c
+from astropy.table import QTable
 from matplotlib.axes import Axes
 import numpy as np
 from warnings import warn
@@ -73,11 +74,12 @@ class Spectrum:
 
         # Interpolate values down from higher to lower res spectrum
         flux_interp = np.interp(self.wave, other.wave, other.flux)
+        fluxerr_interp = np.interp(self.wave, other.wave, other.flux_err)
 
         # Add the errors in quadrature if both exist, otherwise just make error None.
         if self.flux_err is not None and other.flux_err is not None:
             flux_err_quadrature = np.sqrt(
-                self.flux_err ** 2 + other.flux_err ** 2
+                self.flux_err ** 2 + fluxerr_interp ** 2
             )
         else:
             flux_err_quadrature = None
@@ -97,6 +99,12 @@ class Spectrum:
             self.flux * factor,
             self.flux_err * factor if self.flux_err is not None else None
         )
+
+    def __rmul__(self, factor: float) -> Spectrum:
+        """
+        Allow commutativity in multiplication with scalar factor.
+        """
+        return self.__mul__(factor)
 
     def redshift(self, velocity: u.Quantity) -> Spectrum:
         """
@@ -136,3 +144,30 @@ class Spectrum:
             label=label,
             **plot_kwargs
         )
+
+    def write(
+        self,
+        **write_kwargs
+    ) -> None:
+        """
+        Writes the spectrum to a file, using the astropy table writer(s).
+
+        Parameters:
+        -----------
+            **write_kwargs: all keyword arguments passed to this function get
+                passed to the astropy Table.write() method.
+        """
+
+        if self.flux_err is not None:
+            QTable(
+                [self.wave, self.flux, self.flux_err],
+                names=["wave", "flux", "flux_err"]
+            ).write(**write_kwargs)
+
+        else:
+            QTable(
+                [self.wave, self.flux],
+                names=["wave", "flux"]
+            ).write(**write_kwargs)
+
+        return None
